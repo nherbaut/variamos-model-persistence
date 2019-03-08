@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.variamos.persistence";
+
+
+package variamosgrpc;
+
+
+service DocumentRepository {
+  
+  rpc listDocuments (User) returns (stream Document) {}
+  rpc getDocument (User) returns (DocumentData) {} 
+  
+}
+
+service UserService {
+  
+  rpc createUser (User) returns (Empty) {}
+   
+  
+}
+
+message User {
+string name=1;
+}
+message Empty {}
+
+message Document{
+	string path=1;
+	repeated Metadata metadata=2;
+	
+}
+
+message DocumentData{
+	Document document=1;
+	bytes payload=2; 
+}
+message Metadata {
+  string key = 1;
+  string value = 2;
+}
+
+
