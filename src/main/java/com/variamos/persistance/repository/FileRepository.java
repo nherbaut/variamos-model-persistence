@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.variamos.data.mongo;
+package com.variamos.persistance.repository;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public abstract class CustomerRepository implements MongoRepository<Customer, String> {
+import com.variamos.persistance.entity.Document;
 
-	public abstract Customer findByFirstName(String firstName);
-
-	public abstract List<Customer> findByLastName(String lastName);
+public interface FileRepository extends MongoRepository<Document, String> {
 
 }

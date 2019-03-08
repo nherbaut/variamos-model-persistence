@@ -10,7 +10,8 @@ package variamosgrpc;
 service DocumentRepository {
   
   rpc listDocuments (User) returns (stream Document) {}
-  rpc getDocument (User) returns (DocumentData) {} 
+  rpc getDocument ( Document) returns (Document) {}
+  rpc saveDocument (Document) returns (Empty) {} 
   
 }
 
@@ -28,14 +29,12 @@ message Empty {}
 
 message Document{
 	string path=1;
-	repeated Metadata metadata=2;
+	User owner=2;
+	repeated Metadata metadata=3;
+	bytes payload=4;
 	
 }
 
-message DocumentData{
-	Document document=1;
-	bytes payload=2; 
-}
 message Metadata {
   string key = 1;
   string value = 2;

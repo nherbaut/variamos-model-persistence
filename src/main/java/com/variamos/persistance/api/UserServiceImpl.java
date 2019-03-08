@@ -1,4 +1,4 @@
-package com.variamos.data.mongo;
+package com.variamos.persistance.api;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
 import com.mongodb.DB;
+import com.variamos.persistance.repository.DBFactory;
 import com.variamos.persistence.Empty;
 import com.variamos.persistence.User;
 import com.variamos.persistence.UserServiceGrpc.UserServiceImplBase;
@@ -17,10 +18,9 @@ import com.variamos.persistence.UserServiceGrpc.UserServiceImplBase;
 import io.grpc.Metadata;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
-import io.grpc.stub.MetadataUtils;
 import io.grpc.stub.StreamObserver;
 
-@GRpcService(interceptors = MongoInterceptor.class)
+@GRpcService(interceptors = APILogger.class)
 public class UserServiceImpl extends UserServiceImplBase {
 
 	@Autowired

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.variamos.data.mongo;
+package com.variamos.persistance;
 
 import org.lognet.springboot.grpc.GRpcServerRunner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.mongodb.MongoClient;
+import com.variamos.persistance.api.UserServiceImpl;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -32,7 +33,7 @@ import io.grpc.ServerBuilder;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class SampleMongoApplication implements CommandLineRunner {
+public class App implements CommandLineRunner {
 
 	@Autowired
 	UserServiceImpl service;
@@ -42,7 +43,7 @@ public class SampleMongoApplication implements CommandLineRunner {
 	
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(SampleMongoApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 	@Override
