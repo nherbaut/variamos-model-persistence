@@ -18,6 +18,7 @@ package com.variamos.persistance;
 
 import org.lognet.springboot.grpc.GRpcServerRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -41,6 +42,8 @@ public class App implements CommandLineRunner {
 	@Autowired
 	GRpcServerRunner runner;
 	
+	@Value("${local.mongodb.port}")
+	String port;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(App.class, args);
@@ -48,6 +51,7 @@ public class App implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		System.out.println(port);
 		runner.run(args);
 		Thread.currentThread().join();
 

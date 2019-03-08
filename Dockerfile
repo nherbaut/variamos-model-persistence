@@ -1,2 +1,3 @@
 from java:8
-COPY 
+RUN apt-get update && apt-get install mongodb
+CP  
