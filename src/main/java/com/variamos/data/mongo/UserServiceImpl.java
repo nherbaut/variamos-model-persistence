@@ -1,5 +1,6 @@
 package com.variamos.data.mongo;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +15,10 @@ import com.variamos.persistence.User;
 import com.variamos.persistence.UserServiceGrpc.UserServiceImplBase;
 
 import io.grpc.Metadata;
-import io.grpc.Metadata.Key;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
 import io.grpc.stub.StreamObserver;
-
 
 @GRpcService(interceptors = MongoInterceptor.class)
 public class UserServiceImpl extends UserServiceImplBase {
@@ -31,18 +30,15 @@ public class UserServiceImpl extends UserServiceImplBase {
 	public void createUser(User request, StreamObserver<Empty> responseObserver) {
 
 		DB db = factory.getInstance(request.getName());
-		Map<String, Object> commandArguments = new HashMap<String, Object>();
-		commandArguments.put("createUser", request.getName());
-		commandArguments.put("pwd", "password123");
-		String[] roles = { "readWrite" };
-		commandArguments.put("roles", roles);
-		BasicDBObject command = new BasicDBObject(commandArguments);
-		CommandResult res = db.command(command);
+		final BasicDBObject createUserCommand = new BasicDBObject("createUser", request.getName()).append("pwd", "mypassword")
+				.append("roles",
+						Collections.singletonList(new BasicDBObject("role", "dbOwner").append("db", "variamos-"+request.getName())));
+		CommandResult res = db.command(createUserCommand);
 
 		if (!res.ok()) {
 
-		
-			responseObserver.onError(new StatusRuntimeException(Status.INTERNAL.augmentDescription(res.getErrorMessage())));
+			responseObserver
+					.onError(new StatusRuntimeException(Status.INTERNAL.augmentDescription(res.getErrorMessage())));
 			return;
 		}
 
