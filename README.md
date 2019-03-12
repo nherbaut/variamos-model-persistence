@@ -17,5 +17,11 @@ this project represents the persistence for model. Is exposes a GRPC API that ca
 * mongodb (for development only)
 * java 10 (for development only)
 
+
+# client tools
+
+* I used [BloomRPC](https://github.com/uw-labs/bloomrpc) for debug 
+![BloomGRPC screenshot of the API ](screnshot.png?raw=true "BloomGRPC screenshot of the API")
+
 # Todo
 * see issues
