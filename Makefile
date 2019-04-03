@@ -7,7 +7,7 @@ all: build run
 build: java docker
 
 # clean up every generated artefacts, including docker volumes, java binaries and docker images
-clean: stop
+clean: stop clen-doc
 	@sudo rm -rf ./mongo-volume
 	@MONGO_VOLUME=$$(realpath ./mongo-volume) docker-compose down
 	@mvn clean
@@ -33,3 +33,14 @@ run:
 # stop the projet through docker compose
 stop:
 	@MONGO_VOLUME=$$(realpath ./mongo-volume) docker-compose down
+
+doc:
+	@echo generating doc
+	@sudo docker run --rm -v $(PWD)/doc:/out -v $(PWD)/src/main/proto:/protos   pseudomuto/protoc-gen-doc
+	@sudo chown -R $(USER):$(USER) ./doc
+	@python -m webbrowser file://$(PWD)/doc/index.html
+
+
+clean-doc:
+	@rm -rf doc
+

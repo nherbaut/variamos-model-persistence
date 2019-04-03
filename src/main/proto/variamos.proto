@@ -6,35 +6,52 @@ option java_package = "com.variamos.persistence";
 
 package variamosgrpc;
 
-
+/**
+* This Service allows existing users to manage their documents
+**/
 service DocumentRepository {
-  
+  // lists every document belonging to the specified user. This returns shallow document objects
   rpc listDocuments (User) returns (stream Document) {}
+  // retreives a document from its shallow counterpart
   rpc getDocument ( Document) returns (Document) {}
+  // saves a document in the repository
   rpc saveDocument (Document) returns (Empty) {} 
   
 }
-
+/**
+* This service allows creating new users in the document repository. Each user has its own storage space and cannot access other users documents
+*/
 service UserService {
-  
+  //create a user from its definition
   rpc createUser (User) returns (Empty) {}
    
   
 }
 
+/**
+* a message containing a user definition
+*/
 message User {
-string name=1;
+string name=1; //unique name of the user in the system
 }
+
+
 message Empty {}
 
+/**
+* a message representing a document
+*/
 message Document{
-	string path=1;
-	User owner=2;
-	repeated Metadata metadata=3;
-	bytes payload=4;
+	string path=1; //the virtual file path of the document
+	User owner=2; // the user that owns the document
+	repeated Metadata metadata=3; // some metadata attached to the document 
+	bytes payload=4; // the actual content of the document
 	
 }
 
+/**
+*  a message containing metadata about a document, in KV form
+*/
 message Metadata {
   string key = 1;
   string value = 2;
